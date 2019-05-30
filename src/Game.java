@@ -55,8 +55,8 @@ public class Game {
   
       
 
-      //set "w" key to move the plane up
-        if(key == 87 &&  userRow != 0){
+      //set "up arrow" key to move the plane up
+        if(key == 38 &&  userRow != 0){
 
           boolean isUpWall = grid.getColor(new Location(userRow - 1, userCol)).equals(pink);
           System.out.print("UpWall: " + isUpWall);
@@ -76,7 +76,30 @@ public class Game {
           }
         }
       //if I push down arrow, then plane goes down
-  
+      if(key == 40 &&  userRow != 0){
+
+        boolean isDownWall = grid.getColor(new Location(userRow +1, userCol)).equals(pink);
+        System.out.print("DownWall: " + isDownWall);
+
+        if(!isDownWall){
+
+        //check case where out of bounds
+        Location oldLoc = new Location(userRow, userCol);
+        grid.setImage(oldLoc, null);
+
+        //change the field for userrow
+        userRow--;
+        //shift the user picture up in the array
+        Location loc = new Location(userRow, userCol);
+        grid.setImage(loc, userPic);
+
+        }
+        // push right arrow 
+
+
+
+        //push left arrow
+      }
   
     }
     
