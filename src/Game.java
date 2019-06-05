@@ -63,20 +63,21 @@ public class Game {
 
           if(!isUpWall){
 
-          //check case where out of bounds
-          Location oldLoc = new Location(userRow, userCol);
-          grid.setImage(oldLoc, null);
+            //check case where out of bounds
+            Location oldLoc = new Location(userRow, userCol);
+            grid.setImage(oldLoc, null);
 
-          //change the field for userrow
-          userRow--;
-          //shift the user picture up in the array
-          Location loc = new Location(userRow, userCol);
-          grid.setImage(loc, userPic);
+            //change the field for userrow
+            userRow--;
+            //shift the user picture up in the array
+            Location loc = new Location(userRow, userCol);
+            grid.setImage(loc, userPic);
 
           }
         }
+
       //if I push down arrow, then plane goes down
-      if(key == 40 &&  userRow != 0){
+      if(key == 40 &&  userRow != grid.getNumRows()-1){
 
         boolean isDownWall = grid.getColor(new Location(userRow +1, userCol)).equals(pink);
         System.out.print("DownWall: " + isDownWall);
@@ -88,20 +89,60 @@ public class Game {
         grid.setImage(oldLoc, null);
 
         //change the field for userrow
-        userRow--;
+        userRow++;
         //shift the user picture up in the array
         Location loc = new Location(userRow, userCol);
         grid.setImage(loc, userPic);
 
         }
-        // push right arrow 
+      }
 
+        // push right arrow 
+        if(key == 39 &&  userCol != grid.getNumCols()-1){
+
+          boolean isRightWall = grid.getColor(new Location(userRow, userCol+1)).equals(pink);
+          System.out.print("RightWall: " + isRightWall);
+  
+          if(!isRightWall){
+  
+          //check case where out of bounds
+          Location oldLoc = new Location(userRow, userCol);
+          grid.setImage(oldLoc, null);
+  
+          //change the field for userrow
+          userCol++;
+          //shift the user picture up in the array
+          Location loc = new Location(userRow, userCol);
+          grid.setImage(loc, userPic);
+  
+          }
+        }
 
 
         //push left arrow
+        if(key == 37 &&  userRow != 0){
+
+          boolean isLeftWall = grid.getColor(new Location(userRow, userCol-1)).equals(pink);
+          System.out.print("LeftWall: " + isLeftWall);
+  
+          if(!isLeftWall){
+  
+            //check case where out of bounds
+            Location oldLoc = new Location(userRow, userCol);
+            grid.setImage(oldLoc, null);
+    
+            //change the field for userrow
+            userCol--;
+
+            //shift the user picture up in the array
+            Location loc = new Location(userRow, userCol);
+            grid.setImage(loc, userPic);
+    
+          }
+        }
+        
       }
   
-    }
     
     public void populateRightEdge(){
   
