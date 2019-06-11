@@ -4,7 +4,7 @@ public class Cell {
     private String imageFileName;
     
     public Cell() {
-      color = new Color(0, 0, 0);
+      color = new Color(255, 255, 255);
       imageFileName = null;
     }
     
