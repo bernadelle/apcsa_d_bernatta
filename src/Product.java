@@ -21,7 +21,9 @@ public class Product{
         pLoc.changeRow(dRow);
     }
 
-    
+    public void setLocation(Location l){
+        pLoc = l;
+    }
 
 
 }

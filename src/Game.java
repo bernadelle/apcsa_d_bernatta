@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 
 public class Game {
 
@@ -33,12 +33,26 @@ public class Game {
       timesGet = 0;
       timesAvoid = 0;
       updateTitle();
-      grid.setImage(new Location(userRow, userCol), userPic);
-      grid.setImage(new Location(7,15),perm);
-      grid.setImage(new Location(7,16), flatiron);
+      
       createShelves();
+
+      products = new ArrayList<Product>();
+      products.add(new Product(new Location(7,15), perm));
+      showProducts();
+
+
+
+
+
     }
     
+    public void showProducts(){
+      for(int i = 0; i < products.size(); i++){
+        Product p = products.get(i);
+        grid.setImage(p.getLocation(), p.getImage());
+      }
+    }
+
     public void createShelves(){
       
       for(int i = 1; i < grid.getNumRows(); i++)
@@ -135,7 +149,7 @@ public class Game {
         grid.pause(100);
         handleKeyPress();
         if (msElapsed % 300 == 0) {
-
+          moveObstacles();
         }
         updateTitle();
         msElapsed += 100;
@@ -243,15 +257,66 @@ public class Game {
     public void moveObstacles(){
       
       //loop through all the objects
+      for(int i = 0; i < products.size(); i++){
+        
+        Product p = products.get(i);
+        
+        //check row diff and col diff and see which is greater
+        int productRow = p.getLocation().getRow();
+        int productCol = p.getLocation().getCol();
+        int rowDiff = userRow - productRow;
+        int colDiff = userCol - productCol;
+        Location moveLoc;
 
-      //change the position according to rules
+        Location upLoc = new Location(productRow - 1, productCol);
+        Location downLoc = new Location(productRow + 1, productCol);
+        Location leftLoc = new Location(productRow, productCol - 1);
+        Location rightLoc = new Location(productRow, productCol + 1);
 
-        //check for pac's row
-        if(userRow < permRow){
-
+        if(Math.abs(rowDiff) > Math.abs(colDiff)){
+          if(rowDiff < 0){  //go up
+            moveLoc = upLoc;
+          } else { // go down
+            moveLoc = downLoc;
+          }
+        } else {
+          if(colDiff < 0){  //go left
+            moveLoc = leftLoc;
+          } else { // go right
+            moveLoc = rightLoc;
+          }
 
         }
-    }
+
+        //move greatest way
+      
+          while(grid.getColor(moveLoc).equals(pink)){
+            int rando = (int)(Math.random() * 3);
+            // if it's 0 move left, if its 1 move right, if its 2 move down
+            if(rando == 0){
+              moveLoc = leftLoc;
+            }
+            if(rando == 1){
+              moveLoc = rightLoc;
+            }
+            if(rando == 2){
+              moveLoc = upLoc;
+            }
+            if(rando == 3){
+              moveLoc = downLoc;
+            }
+          }
+
+          //finally move the object
+          grid.setImage(moveLoc, p.getImage());
+          grid.setImage(p.getLocation(), null);
+          p.setLocation(moveLoc);
+
+        }
+
+         
+        }
+   
     
   
     
