@@ -57,8 +57,8 @@ public class Game {
       grid.setColor(new Location(6,17),pink);
       grid.setColor(new Location(6,14),pink);
       grid.setColor(new Location(6,16),pink);
-      grid.setColor(new Location(),pink);
-      grid.setColor(new Location(),pink);
+      //grid.setColor(new Location(),pink);
+      //grid.setColor(new Location(),pink);
 
 
       
