@@ -243,7 +243,7 @@ public class Game {
     public void moveObstacles(){
       
       //loop through all the objects
-      
+
       //change the position according to rules
 
         //check for pac's row
