@@ -27,6 +27,7 @@ public class Game {
       updateTitle();
       grid.setImage(new Location(userRow, userCol), userPic);
       grid.setImage(new Location(7,15),perm);
+      grid.setImage(new Location(7,16), flatiron);
       createShelves();
     }
     
@@ -57,11 +58,67 @@ public class Game {
       grid.setColor(new Location(6,17),pink);
       grid.setColor(new Location(6,14),pink);
       grid.setColor(new Location(6,16),pink);
-      grid.setColor(new Location(),pink);
-      grid.setColor(new Location(),pink);
+      grid.setColor(new Location(2,3),pink);
+      grid.setColor(new Location(3,3),pink);
+      grid.setColor(new Location(4,3),pink);
+      grid.setColor(new Location(5,3),pink);
+      grid.setColor(new Location(6,3),pink);
+      grid.setColor(new Location(2,3),pink);
+      grid.setColor(new Location(2,4),pink);
+      grid.setColor(new Location(2,5),pink);
+      grid.setColor(new Location(4,8),pink);
+      grid.setColor(new Location(5,8),pink);
+      grid.setColor(new Location(6,8),pink);
+      grid.setColor(new Location(7,8),pink);
+      grid.setColor(new Location(10,4),pink);
+      grid.setColor(new Location(11,4),pink);
+      grid.setColor(new Location(12,4),pink);
+      grid.setColor(new Location(13,4),pink);
+      grid.setColor(new Location(13,2),pink);
+      grid.setColor(new Location(13,3),pink);
+      grid.setColor(new Location(13,5),pink);
+      grid.setColor(new Location(13,6),pink);
+      grid.setColor(new Location(2,13),pink);
+      grid.setColor(new Location(2,14),pink);
+      grid.setColor(new Location(2,15),pink);
+      grid.setColor(new Location(2,16),pink);
+      grid.setColor(new Location(2,17),pink);
+      grid.setColor(new Location(3,15),pink);
+      grid.setColor(new Location(4,15),pink);
+      grid.setColor(new Location(2,21),pink);
+      grid.setColor(new Location(2,22),pink);
+      grid.setColor(new Location(2,23),pink);
+      grid.setColor(new Location(2,24),pink);
+      grid.setColor(new Location(2,25),pink);
+      grid.setColor(new Location(2,26),pink);
+      grid.setColor(new Location(2,27),pink);
+      grid.setColor(new Location(4,24),pink);
+      grid.setColor(new Location(5,24),pink);
+      grid.setColor(new Location(6,24),pink);
+      grid.setColor(new Location(7,24),pink);
+      grid.setColor(new Location(8,24),pink);
+      grid.setColor(new Location(12,12),pink);
+      grid.setColor(new Location(12,13),pink);
+      grid.setColor(new Location(12,14),pink);
+      grid.setColor(new Location(12,15),pink);
+      grid.setColor(new Location(12,16),pink);
+      grid.setColor(new Location(12,17),pink);
+      grid.setColor(new Location(12,18),pink);
+      grid.setColor(new Location(13,12),pink);
+      grid.setColor(new Location(13,13),pink);
+      grid.setColor(new Location(13,14),pink);
+      grid.setColor(new Location(13,15),pink);
+      grid.setColor(new Location(13,16),pink);
+      grid.setColor(new Location(13,17),pink);
+      grid.setColor(new Location(13,18),pink);
+      grid.setColor(new Location(13,24),pink);
+      grid.setColor(new Location(13,25),pink);
+      grid.setColor(new Location(13,26),pink);
+      grid.setColor(new Location(13,27),pink);
+      grid.setColor(new Location(12,27),pink);
+      grid.setColor(new Location(11,27),pink);
 
 
-      
     }
 
     public void play() {
@@ -70,8 +127,7 @@ public class Game {
         grid.pause(100);
         handleKeyPress();
         if (msElapsed % 300 == 0) {
-          scrollLeft();
-          populateRightEdge();
+
         }
         updateTitle();
         msElapsed += 100;
@@ -175,25 +231,31 @@ public class Game {
         
       }
   
-    
-    public void populateRightEdge(){
-  
+
+    public void moveObstacles(){
+      while(!isGameOver()){
+        //check for pac's row
+      
+
+      }
     }
     
-    public void scrollLeft(){
   
-    }
     
     public void handleCollision(Location loc) {
   
     }
     
-    public int getScore() {
-      return 0;
+    public int getPacRow() {
+      return userRow;
+    }
+
+    public int getPackCol(){
+      return userCol;
     }
     
     public void updateTitle() {
-      grid.setTitle("Game:  " + getScore());
+     
     }
     
     public boolean isGameOver() {
