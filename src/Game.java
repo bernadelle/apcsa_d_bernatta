@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Game {
 
 
@@ -13,12 +15,18 @@ public class Game {
     private String flatiron = "flatiron.png";
     private Color pink;
     private Color white;
+    private List<Product> products;
 
     public Game() {
   
+
+
       pink = new Color(255, 192, 203);
       white = new Color(255, 255,255);
       grid = new Grid(15,30);
+      
+      //construct the products object
+      
       userRow = 6;
       userCol = 5;
       msElapsed = 0;
@@ -233,11 +241,16 @@ public class Game {
   
 
     public void moveObstacles(){
-      while(!isGameOver()){
-        //check for pac's row
       
+      //loop through all the objects
+      
+      //change the position according to rules
 
-      }
+        //check for pac's row
+        if(userRow < permRow){
+
+
+        }
     }
     
   

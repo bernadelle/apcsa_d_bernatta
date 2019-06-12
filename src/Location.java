@@ -15,7 +15,15 @@ public class Location {
     public int getCol() {
       return col;
     }
-    
+
+    public void changeRow(int r){
+      row+= r;
+    }
+
+    public void changeCol(int c){
+      col+= c;
+    }
+
     public boolean equals(Location otherLoc) {
       return row == otherLoc.getRow() && col == otherLoc.getCol();
     }
