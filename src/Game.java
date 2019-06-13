@@ -16,6 +16,7 @@ public class Game {
     private Color pink;
     private Color white;
     private List<Product> products;
+    private List<String> pacLevels;
 
     public Game() {
   
@@ -27,8 +28,8 @@ public class Game {
       
       //construct the products object
       
-      userRow = 6;
-      userCol = 5;
+      userRow = 7;
+      userCol = 0;
       msElapsed = 0;
       timesGet = 0;
       timesAvoid = 0;
@@ -38,9 +39,21 @@ public class Game {
 
       products = new ArrayList<Product>();
       products.add(new Product(new Location(7,15), perm));
+      products.add(new Product(new Location(7,17), flatiron));
+      products.add(new Product(new Location(10,20), perm));
+      products.add(new Product(new Location(4,5), flatiron));
       showProducts();
 
-
+      pacLevels = new ArrayList<String>();
+      pacLevels.add("pac-0.png");
+      pacLevels.add("pac-1.png");
+      pacLevels.add("pac-2.png");
+      pacLevels.add("pac-3.png");
+      pacLevels.add("pac-4.png");
+      pacLevels.add("pac-5.png");
+      pacLevels.add("pac-6.png");
+      pacLevels.add("pac-7.png");
+      pacLevels.add("pac-8.png");
 
 
 
@@ -147,6 +160,8 @@ public class Game {
   
       while (!isGameOver()) {
         grid.pause(100);
+        grid.setImage(new Location(7,0), userPic);
+        grid.setImage(new Location(7,0), null);
         handleKeyPress();
         if (msElapsed % 300 == 0) {
           moveObstacles();
@@ -321,7 +336,20 @@ public class Game {
   
     
     public void handleCollision(Location loc) {
-  
+
+      for(int i = 0; i < products.size(); i++){
+
+        Product p = products.get(i);
+        Location userLocation = new Location(userRow, userCol);
+        if(p.getLocation().equals(userLocation)){
+          
+
+        }
+
+
+      }
+
+
     }
     
     public int getPacRow() {
