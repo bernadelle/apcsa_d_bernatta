@@ -11,7 +11,7 @@
             "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
-            "mainClass": "app.App",
+            "mainClass": "Game",
             "projectName": "TestCode"
         }
     ]

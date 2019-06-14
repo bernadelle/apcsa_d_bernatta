@@ -10,13 +10,17 @@ public class Game {
     private int msElapsed;
     private int timesGet;
     private int timesAvoid;
-    private String userPic = "pac-2.png";
+    private int userLevel;
+    private String userPic() {return pacLevels.get(userLevel);}
     private String perm = "relaxer.png";
     private String flatiron = "flatiron.png";
+    private String conditioner = "product1.png";
     private Color pink;
     private Color white;
-    private List<Product> products;
+    private List<Product> badproducts;
+    private List<Product> goodproducts;
     private List<String> pacLevels;
+    private String gameName = "Protect The Hair";
 
     public Game() {
   
@@ -25,6 +29,7 @@ public class Game {
       pink = new Color(255, 192, 203);
       white = new Color(255, 255,255);
       grid = new Grid(15,30);
+      grid.setTitle(gameName);
       
       //construct the products object
       
@@ -37,12 +42,19 @@ public class Game {
       
       createShelves();
 
-      products = new ArrayList<Product>();
-      products.add(new Product(new Location(7,15), perm));
-      products.add(new Product(new Location(7,17), flatiron));
-      products.add(new Product(new Location(10,20), perm));
-      products.add(new Product(new Location(4,5), flatiron));
+      badproducts = new ArrayList<Product>();
+      badproducts.add(new Product(new Location(7,15), perm));
+      badproducts.add(new Product(new Location(7,17), flatiron));
+      badproducts.add(new Product(new Location(10,20), perm));
+      badproducts.add(new Product(new Location(4,5), flatiron));
+
+      goodproducts = new ArrayList<Product>();
+      goodproducts.add(new Product(new Location(5,20), conditioner));
+      goodproducts.add(new Product(new Location(10,13), conditioner));
+
       showProducts();
+
+      userLevel = 2;
 
       pacLevels = new ArrayList<String>();
       pacLevels.add("pac-0.png");
@@ -60,10 +72,16 @@ public class Game {
     }
     
     public void showProducts(){
-      for(int i = 0; i < products.size(); i++){
-        Product p = products.get(i);
+      for(int i = 0; i < badproducts.size(); i++){
+        Product p = badproducts.get(i);
         grid.setImage(p.getLocation(), p.getImage());
       }
+
+      for(int i = 0; i < goodproducts.size(); i++){
+        Product p = goodproducts.get(i);
+        grid.setImage(p.getLocation(), p.getImage());
+      }
+
     }
 
     public void createShelves(){
@@ -157,21 +175,32 @@ public class Game {
     }
 
     public void play() {
-  
+      
+     // grid.fullscreen();
+     grid.setImage(new Location(7,0), userPic());
+
       while (!isGameOver()) {
         grid.pause(100);
-        grid.setImage(new Location(7,0), userPic);
-        grid.setImage(new Location(7,0), null);
         handleKeyPress();
+        handleCollisions();
         if (msElapsed % 300 == 0) {
           moveObstacles();
         }
         updateTitle();
         msElapsed += 100;
       }
+
+      endGame();
+
+
     }
     
+    public void endGame(){
+      //if()
+    }
+
     public void handleKeyPress(){
+
   
       //check last key pressed
       int key = grid.checkLastKeyPressed();
@@ -182,6 +211,7 @@ public class Game {
       //set "up arrow" key to move the plane up
         if(key == 38 &&  userRow != 0){
 
+          grid.setImage(new Location(7,0), null);
           boolean isUpWall = grid.getColor(new Location(userRow - 1, userCol)).equals(pink);
           System.out.print("UpWall: " + isUpWall);
 
@@ -195,7 +225,7 @@ public class Game {
             userRow--;
             //shift the user picture up in the array
             Location loc = new Location(userRow, userCol);
-            grid.setImage(loc, userPic);
+            grid.setImage(loc, userPic());
 
           }
         }
@@ -203,6 +233,7 @@ public class Game {
       //if I push down arrow, then plane goes down
       if(key == 40 &&  userRow != grid.getNumRows()-1){
 
+        grid.setImage(new Location(7,0), null);
         boolean isDownWall = grid.getColor(new Location(userRow +1, userCol)).equals(pink);
         System.out.print("DownWall: " + isDownWall);
 
@@ -216,7 +247,7 @@ public class Game {
         userRow++;
         //shift the user picture up in the array
         Location loc = new Location(userRow, userCol);
-        grid.setImage(loc, userPic);
+        grid.setImage(loc, userPic());
 
         }
       }
@@ -224,6 +255,7 @@ public class Game {
         // push right arrow 
         if(key == 39 &&  userCol != grid.getNumCols()-1){
 
+          grid.setImage(new Location(7,0), null);
           boolean isRightWall = grid.getColor(new Location(userRow, userCol+1)).equals(pink);
           System.out.print("RightWall: " + isRightWall);
   
@@ -237,7 +269,7 @@ public class Game {
           userCol++;
           //shift the user picture up in the array
           Location loc = new Location(userRow, userCol);
-          grid.setImage(loc, userPic);
+          grid.setImage(loc, userPic());
   
           }
         }
@@ -246,7 +278,7 @@ public class Game {
         //push left arrow
         if(key == 37 &&  userRow != 0){
 
-       
+          grid.setImage(new Location(7,0), null);
           boolean isLeftWall = grid.getColor(new Location(userRow, userCol-1)).equals(pink);
           System.out.print("LeftWall: " + isLeftWall);
   
@@ -261,20 +293,29 @@ public class Game {
 
             //shift the user picture up in the array
             Location loc = new Location(userRow, userCol);
-            grid.setImage(loc, userPic);
+            grid.setImage(loc, userPic());
     
           }
         }
         
+        if(userCol == 0 && key == 37){
+          // play noise
+          grid.setImage(new Location(userRow, userCol), userPic());
+        }
+
+        if(userCol == 29 && key == 39){
+          // play noise
+          grid.setImage(new Location(userRow, userCol), userPic());
+        }
       }
   
 
     public void moveObstacles(){
       
       //loop through all the objects
-      for(int i = 0; i < products.size(); i++){
+      for(int i = 0; i < badproducts.size(); i++){
         
-        Product p = products.get(i);
+        Product p = badproducts.get(i);
         
         //check row diff and col diff and see which is greater
         int productRow = p.getLocation().getRow();
@@ -305,7 +346,8 @@ public class Game {
 
         //move greatest way
       
-          while(grid.getColor(moveLoc).equals(pink)){
+        while(grid.getColor(moveLoc).equals(pink) || conditioner.equals(grid.getImage(moveLoc)) ){
+            
             int rando = (int)(Math.random() * 3);
             // if it's 0 move left, if its 1 move right, if its 2 move down
             if(rando == 0){
@@ -328,26 +370,36 @@ public class Game {
           p.setLocation(moveLoc);
 
         }
-
-         
-        }
-   
-    
+      }
   
     
-    public void handleCollision(Location loc) {
+    public void handleCollisions() {
 
-      for(int i = 0; i < products.size(); i++){
+      for(int i = 0; i < badproducts.size(); i++){
 
-        Product p = products.get(i);
+        Product p = badproducts.get(i);
         Location userLocation = new Location(userRow, userCol);
         if(p.getLocation().equals(userLocation)){
-          
-
+          userLevel--;
+          badproducts.remove(i);
+          grid.setImage(userLocation, userPic());
+          return;
         }
-
-
       }
+
+      for(int i = 0; i < goodproducts.size(); i++){
+
+        Product p = goodproducts.get(i);
+        Location userLocation = new Location(userRow, userCol);
+        if(p.getLocation().equals(userLocation)){
+          userLevel++;
+          goodproducts.remove(i);
+          grid.setImage(userLocation, userPic());
+          return;
+        }
+      }
+
+      
 
 
     }
@@ -361,11 +413,18 @@ public class Game {
     }
     
     public void updateTitle() {
-     
+     grid.setTitle(gameName + " Cuurent Length: " + userLevel + " Dont get to 0!");
     }
     
     public boolean isGameOver() {
-      return false;
+      if(userLevel == 0){
+        return true;
+      } else if(userLevel != 0 && userCol == 29) {
+        return true;
+      } else {
+        return false;
+      }
+
     }
       
     public static void main(String[] args) {
