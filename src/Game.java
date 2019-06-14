@@ -17,6 +17,8 @@ public class Game {
     private String conditioner = "product1.png";
     private Color pink;
     private Color white;
+    private Color black;
+    private Color red;
     private List<Product> badproducts;
     private List<Product> goodproducts;
     private List<String> pacLevels;
@@ -28,6 +30,8 @@ public class Game {
 
       pink = new Color(255, 192, 203);
       white = new Color(255, 255,255);
+      black = new Color(0, 0, 0);
+      red = new Color(255, 0, 0);
       grid = new Grid(15,30);
       grid.setTitle(gameName);
       
@@ -176,7 +180,7 @@ public class Game {
 
     public void play() {
       
-     // grid.fullscreen();
+     grid.fullscreen();
      grid.setImage(new Location(7,0), userPic());
 
       while (!isGameOver()) {
@@ -196,7 +200,19 @@ public class Game {
     }
     
     public void endGame(){
-      //if()
+
+      if(userLevel == 0){
+      for(int i = 0; i < 15; i++){
+        for(int j = 0; j < 30; j++){
+          if(grid.getColor(new Location(i,j)).equals(white)){
+            grid.setColor(new Location(i,j), red);
+          } else {
+            grid.setColor(new Location(i,j), black);
+          }
+
+        }
+      }
+    }
     }
 
     public void handleKeyPress(){
@@ -348,7 +364,10 @@ public class Game {
       
         while(grid.getColor(moveLoc).equals(pink) || conditioner.equals(grid.getImage(moveLoc)) ){
             
+          if(grid.getColor(moveLoc).equals(pink) || conditioner.equals(grid.getImage(moveLoc)) || flatiron.equals(grid.getImage(moveLoc)) || perm.equals(grid.getImage(moveLoc)) ){
             int rando = (int)(Math.random() * 3);
+            // if theres a product at the location, the other product should find a new route
+            
             // if it's 0 move left, if its 1 move right, if its 2 move down
             if(rando == 0){
               moveLoc = leftLoc;
@@ -363,7 +382,7 @@ public class Game {
               moveLoc = downLoc;
             }
           }
-
+        }
           //finally move the object
           grid.setImage(moveLoc, p.getImage());
           grid.setImage(p.getLocation(), null);
@@ -381,8 +400,10 @@ public class Game {
         Location userLocation = new Location(userRow, userCol);
         if(p.getLocation().equals(userLocation)){
           userLevel--;
+          grid.setColor(userLocation, red);
           badproducts.remove(i);
           grid.setImage(userLocation, userPic());
+          grid.setColor(userLocation, white);
           return;
         }
       }
