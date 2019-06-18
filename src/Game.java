@@ -5,6 +5,7 @@ public class Game {
 
     // BERNY & AISSATA
     private Grid grid;
+    private Grid background;
     private int userRow;
     private int userCol;
     private int msElapsed;
@@ -15,11 +16,13 @@ public class Game {
     private String perm = "relaxer.png";
     private String flatiron = "flatiron.png";
     private String conditioner = "product1.png";
+    private String deepcon = "product2.png";
     private Color pink;
     private Color white;
     private Color black;
     private Color red;
-    private List<Product> badproducts;
+    private List<Product> perms;
+    private List<Product> flatirons;
     private List<Product> goodproducts;
     private List<String> pacLevels;
     private String gameName = "Protect The Hair";
@@ -33,6 +36,8 @@ public class Game {
       black = new Color(0, 0, 0);
       red = new Color(255, 0, 0);
       grid = new Grid(15,30);
+
+
       grid.setTitle(gameName);
       
       //construct the products object
@@ -44,18 +49,23 @@ public class Game {
       timesAvoid = 0;
       updateTitle();
       
+      grid.setImage(new Location(userRow, userCol), "pac-2.png");
+      
       createShelves();
 
-      badproducts = new ArrayList<Product>();
-      badproducts.add(new Product(new Location(7,15), perm));
-      badproducts.add(new Product(new Location(7,17), flatiron));
-      badproducts.add(new Product(new Location(10,20), perm));
-      badproducts.add(new Product(new Location(4,5), flatiron));
+      perms = new ArrayList<Product>();
+      flatirons = new ArrayList<Product>();
+      perms.add(new Product(new Location(10,15), perm));
+      flatirons.add(new Product(new Location(7,17), flatiron));
+      flatirons.add(new Product(new Location(10,20), flatiron));
+      flatirons.add(new Product(new Location(4,5), flatiron));
+      flatirons.add(new Product(new Location(9,12), flatiron));
 
       goodproducts = new ArrayList<Product>();
       goodproducts.add(new Product(new Location(5,20), conditioner));
       goodproducts.add(new Product(new Location(10,13), conditioner));
-
+      goodproducts.add(new Product(new Location(13,3), deepcon));
+      goodproducts.add(new Product(new Location(1,14), deepcon));
       showProducts();
 
       userLevel = 2;
@@ -71,13 +81,18 @@ public class Game {
       pacLevels.add("pac-7.png");
       pacLevels.add("pac-8.png");
 
+      }
 
-
-    }
+    
     
     public void showProducts(){
-      for(int i = 0; i < badproducts.size(); i++){
-        Product p = badproducts.get(i);
+      for(int i = 0; i < flatirons.size(); i++){
+        Product p = flatirons.get(i);
+        grid.setImage(p.getLocation(), p.getImage());
+      }
+
+      for(int i = 0; i < perms.size(); i++){
+        Product p = perms.get(i);
         grid.setImage(p.getLocation(), p.getImage());
       }
 
@@ -108,6 +123,8 @@ public class Game {
       for(int i =13; i < 18; i++)
       grid.setColor(new Location(8,i),pink);
 
+      grid.setColor(new Location(8,15), white);
+
 
       grid.setColor(new Location(7,13),pink);
       grid.setColor(new Location(6,13),pink);
@@ -115,14 +132,14 @@ public class Game {
       grid.setColor(new Location(6,17),pink);
       grid.setColor(new Location(6,14),pink);
       grid.setColor(new Location(6,16),pink);
-      grid.setColor(new Location(2,3),pink);
-      grid.setColor(new Location(3,3),pink);
-      grid.setColor(new Location(4,3),pink);
-      grid.setColor(new Location(5,3),pink);
-      grid.setColor(new Location(6,3),pink);
+      grid.setColor(new Location(2,2),pink);
+      grid.setColor(new Location(3,2),pink);
+      grid.setColor(new Location(4,2),pink);
+      grid.setColor(new Location(5,2),pink);
+      grid.setColor(new Location(6,2),pink);
+      grid.setColor(new Location(2,2),pink);
       grid.setColor(new Location(2,3),pink);
       grid.setColor(new Location(2,4),pink);
-      grid.setColor(new Location(2,5),pink);
       grid.setColor(new Location(4,8),pink);
       grid.setColor(new Location(5,8),pink);
       grid.setColor(new Location(6,8),pink);
@@ -130,11 +147,11 @@ public class Game {
       grid.setColor(new Location(10,4),pink);
       grid.setColor(new Location(11,4),pink);
       grid.setColor(new Location(12,4),pink);
-      grid.setColor(new Location(13,4),pink);
-      grid.setColor(new Location(13,2),pink);
-      grid.setColor(new Location(13,3),pink);
-      grid.setColor(new Location(13,5),pink);
-      grid.setColor(new Location(13,6),pink);
+      grid.setColor(new Location(12,4),pink);
+      grid.setColor(new Location(12,2),pink);
+      grid.setColor(new Location(12,3),pink);
+      grid.setColor(new Location(12,5),pink);
+      grid.setColor(new Location(12,6),pink);
       grid.setColor(new Location(2,13),pink);
       grid.setColor(new Location(2,14),pink);
       grid.setColor(new Location(2,15),pink);
@@ -154,6 +171,13 @@ public class Game {
       grid.setColor(new Location(6,24),pink);
       grid.setColor(new Location(7,24),pink);
       grid.setColor(new Location(8,24),pink);
+      grid.setColor(new Location(11,12),pink);
+      grid.setColor(new Location(11,13),pink);
+      grid.setColor(new Location(11,14),pink);
+      grid.setColor(new Location(11,15),pink);
+      grid.setColor(new Location(11,16),pink);
+      grid.setColor(new Location(11,17),pink);
+      grid.setColor(new Location(11,18),pink);
       grid.setColor(new Location(12,12),pink);
       grid.setColor(new Location(12,13),pink);
       grid.setColor(new Location(12,14),pink);
@@ -161,27 +185,19 @@ public class Game {
       grid.setColor(new Location(12,16),pink);
       grid.setColor(new Location(12,17),pink);
       grid.setColor(new Location(12,18),pink);
-      grid.setColor(new Location(13,12),pink);
-      grid.setColor(new Location(13,13),pink);
-      grid.setColor(new Location(13,14),pink);
-      grid.setColor(new Location(13,15),pink);
-      grid.setColor(new Location(13,16),pink);
-      grid.setColor(new Location(13,17),pink);
-      grid.setColor(new Location(13,18),pink);
-      grid.setColor(new Location(13,24),pink);
-      grid.setColor(new Location(13,25),pink);
-      grid.setColor(new Location(13,26),pink);
-      grid.setColor(new Location(13,27),pink);
+      grid.setColor(new Location(12,24),pink);
+      grid.setColor(new Location(12,25),pink);
+      grid.setColor(new Location(12,26),pink);
       grid.setColor(new Location(12,27),pink);
       grid.setColor(new Location(11,27),pink);
+      grid.setColor(new Location(10,27),pink);
 
-
+    
     }
 
     public void play() {
-      
-     grid.fullscreen();
-     grid.setImage(new Location(7,0), userPic());
+
+      grid.fullscreen();
 
       while (!isGameOver()) {
         grid.pause(100);
@@ -212,6 +228,22 @@ public class Game {
 
         }
       }
+
+      if(grid.showInputDialog("YOU LOSE!! TYPE 'yes' TO TRY AGAIN").equals("yes")){
+        userCol = 0;
+        Game game = new Game();
+        game.play();
+      }
+
+      
+    } else if(userLevel != 0 && userCol == 29){
+    if(grid.showInputDialog("YOU WIN! YOUR LEVEL IS: " + userLevel +  " TYPE 'yes' TO PLAY AGAIN!").equals("yes") || grid.showInputDialog("YOU LOSE!! TRY AGAIN?").equals("Yes")){
+      userCol = 0;
+      Game game = new Game();
+      game.play();
+    } else {
+      grid.close();
+    }
     }
     }
 
@@ -329,9 +361,9 @@ public class Game {
     public void moveObstacles(){
       
       //loop through all the objects
-      for(int i = 0; i < badproducts.size(); i++){
+      for(int i = 0; i < flatirons.size(); i++){
         
-        Product p = badproducts.get(i);
+        Product p = flatirons.get(i);
         
         //check row diff and col diff and see which is greater
         int productRow = p.getLocation().getRow();
@@ -362,9 +394,9 @@ public class Game {
 
         //move greatest way
       
-        while(grid.getColor(moveLoc).equals(pink) || conditioner.equals(grid.getImage(moveLoc)) ){
+        while(grid.getColor(moveLoc).equals(pink) || perm.equals(grid.getImage(moveLoc)) || conditioner.equals(grid.getImage(moveLoc))){
             
-          if(grid.getColor(moveLoc).equals(pink) || conditioner.equals(grid.getImage(moveLoc)) || flatiron.equals(grid.getImage(moveLoc)) || perm.equals(grid.getImage(moveLoc)) ){
+          
             int rando = (int)(Math.random() * 3);
             // if theres a product at the location, the other product should find a new route
             
@@ -381,7 +413,7 @@ public class Game {
             if(rando == 3){
               moveLoc = downLoc;
             }
-          }
+          
         }
           //finally move the object
           grid.setImage(moveLoc, p.getImage());
@@ -394,19 +426,36 @@ public class Game {
     
     public void handleCollisions() {
 
-      for(int i = 0; i < badproducts.size(); i++){
+      for(int i = 0; i < flatirons.size(); i++){
 
-        Product p = badproducts.get(i);
+        Product p = flatirons.get(i);
         Location userLocation = new Location(userRow, userCol);
-        if(p.getLocation().equals(userLocation)){
+        if(p.getLocation().equals(userLocation) && p.getImage().equals("flatiron.png")){
           userLevel--;
+          
           grid.setColor(userLocation, red);
-          badproducts.remove(i);
+          flatirons.remove(i);
           grid.setImage(userLocation, userPic());
           grid.setColor(userLocation, white);
           return;
         }
       }
+      for(int i = 0; i < perms.size(); i++){
+
+        Product p = perms.get(i);
+        Location userLocation = new Location(userRow, userCol);
+         if(p.getLocation().equals(userLocation) && p.getImage().equals("perm.png")){
+          for(int j = userLevel; j >= 0; j--){
+            userLevel--;
+          }
+          grid.setColor(userLocation, red);
+          perms.remove(i);
+          grid.setImage(userLocation, userPic());
+          grid.setColor(userLocation, white);
+        
+        }
+      }
+      
 
       for(int i = 0; i < goodproducts.size(); i++){
 
@@ -420,10 +469,10 @@ public class Game {
         }
       }
 
-      
-
-
     }
+
+
+    
     
     public int getPacRow() {
       return userRow;
@@ -447,6 +496,8 @@ public class Game {
       }
 
     }
+
+    
       
     public static void main(String[] args) {
       Game game = new Game();
